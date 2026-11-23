@@ -2,6 +2,7 @@
 using System.IO;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.Compilation;
 
 #if (UNITY_EDITOR)
 
@@ -21,9 +22,6 @@ namespace MAST
 
         // Folder name used by the legacy (pre-package) layout
         const string legacyFolderName = "MAST";
-
-        // Name of the assembly definition file that identifies this tool inside a project
-        const string assemblyDefinitionFileName = "TileMap3D.Editor.asmdef";
 
         // Cached result of the tool root lookup
         static string cachedToolRoot = null;
@@ -77,26 +75,14 @@ namespace MAST
         // ---------------------------------------------------------------------------
         private static string FindToolRootFromAssemblyDefinition()
         {
-            string[] guids = AssetDatabase.FindAssets("t:AssemblyDefinitionAsset");
+            string assemblyName = typeof(LoadingHelper).Assembly.GetName().Name;
+            string path = CompilationPipeline.GetAssemblyDefinitionFilePathFromAssemblyName(assemblyName);
+            if (string.IsNullOrEmpty(path) || Path.GetFileName(path) != "TileMap3D.Editor.asmdef")
+                return "";
 
-            foreach (string guid in guids)
-            {
-                string path = AssetDatabase.GUIDToAssetPath(guid);
-
-                if (!path.EndsWith("/" + assemblyDefinitionFileName, StringComparison.OrdinalIgnoreCase))
-                    continue;
-
-                // The assembly definition lives in "<root>/Scripts", the resources live in "<root>"
-                string scriptsFolder = Path.GetDirectoryName(path).Replace("\\", "/");
-                string rootFolder = Path.GetDirectoryName(scriptsFolder).Replace("\\", "/");
-
-                if (AssetDatabase.IsValidFolder(rootFolder + "/Etc"))
-                    return rootFolder;
-
-                return scriptsFolder;
-            }
-
-            return "";
+            // The asmdef is at <resource root>/Scripts/TileMap3D.Editor.asmdef.
+            var root = Path.GetDirectoryName(Path.GetDirectoryName(path));
+            return string.IsNullOrEmpty(root) ? "" : root.Replace('\\', '/');
         }
 
         // ---------------------------------------------------------------------------
@@ -112,29 +98,15 @@ namespace MAST
         // ---------------------------------------------------------------------------
         private static string FindToolFolderInAssets()
         {
-            string rootPath = "";
-
-            if (!Directory.Exists("Assets"))
-                return rootPath;
-
-            // Get string array containing all folders
-            string[] allFolders = Directory.GetDirectories(
-                "Assets", "*" ,
-                SearchOption.AllDirectories);
-
-            // Loop through each folder, find the tool folder, and save it locally
-            foreach (string folder in allFolders)
+            foreach (string folder in Directory.EnumerateDirectories("Assets", "*", SearchOption.AllDirectories))
             {
-                if (folder.Length < 4)
-                    continue;
-
-                string folderName = folder.Substring(folder.Length - 4, 4);
-
-                if (folderName == assetFolderName || folderName == legacyFolderName)
-                    rootPath = folder;
+                string folderName = Path.GetFileName(folder);
+                if ((folderName == assetFolderName || folderName == legacyFolderName)
+                    && File.Exists(folder + guiPath))
+                    return folder.Replace('\\', '/');
             }
 
-            return rootPath;
+            return "";
         }
 
         // ---------------------------------------------------------------------------

@@ -121,11 +121,7 @@ namespace MAST
                         MAST.Building.GridManager.ChangeGridVisibility();
                     }
                     
-                    // Change placement mode back to what was saved
-                    MAST.Building.Interface.ChangePlacementMode(
-                        (BuildMode)MAST.Settings.Data.gui.toolbar.selectedDrawToolIndex);
-                    
-                    MAST.GUI.DataManager.Restore_Palette_Items();
+                    RestorePaletteAndPlacementMode();
                 }
                 
                 // If Enabled in Run Mode
@@ -172,17 +168,25 @@ namespace MAST
                 MAST.GUI.DataManager.Load_Interface_State();
                 MAST.Building.GridManager.ChangeGridVisibility();
                 
-                // Restore the interface saved state
-                MAST.GUI.DataManager.Restore_Palette_Items();
-                
-                // Change placement mode back to what was saved
-                MAST.Building.Interface.ChangePlacementMode(
-                    (BuildMode)MAST.Settings.Data.gui.toolbar.selectedDrawToolIndex);
+                RestorePaletteAndPlacementMode();
                 
                 // Repaint all views
                 UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
                 
                 inPlayMode = false;
+            }
+
+            private static void RestorePaletteAndPlacementMode()
+            {
+                MAST.GUI.DataManager.Restore_Palette_Items();
+                var prefabs = Building.Palette.Manager.GetPrefabArray();
+                int selected = Building.Palette.Manager.selectedItemIndex;
+                if (selected < 0 || selected >= prefabs.Length || prefabs[selected] == null)
+                    Building.Palette.Manager.selectedItemIndex = -1;
+
+                // Toolbar indices start at -1 (no tool), while BuildMode.None is 0.
+                int toolIndex = MAST.Settings.Data.gui.toolbar.selectedDrawToolIndex;
+                Building.Interface.ChangePlacementMode((BuildMode)(toolIndex + 1));
             }
             
             // ---------------------------------------------------------------------------

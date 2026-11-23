@@ -146,21 +146,22 @@ namespace MAST
             // Create grid
             public static void CreateGrid()
             {
-                CreateLinkToGrid();
+                DestroyGrid();
+                if (gridMaterial == null)
+                    gridMaterial = LoadingHelper.GetGridMaterial();
+                if (gridMaterial == null)
+                {
+                    Debug.LogError("3D TileMap could not load the grid material at " +
+                        LoadingHelper.GetToolRoot() + "/Etc/Material_Grid.mat");
+                    return;
+                }
+
+                CreateNewGrid();
 
                 // Lock the layer the grid is on
-                UnityEditor.Tools.lockedLayers = 1 << Const.Grid.gridLayer;
+                UnityEditor.Tools.lockedLayers |= 1 << Const.Grid.gridLayer;
                 
                 gridExists = true;
-            }
-            
-            // Create link to any grid that exists, or create a new grid
-            private static void CreateLinkToGrid()
-            {
-                gridGameObject = GameObject.Find(Const.Grid.defaultName);
-                
-                DestroyGrid();
-                CreateNewGrid();
             }
             
             // ---------------------------------------------------------------------------
@@ -182,15 +183,7 @@ namespace MAST
                 gridMeshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
                 gridMeshRenderer.receiveShadows = false;
                 
-                // Configure Grid GameObject Material
-                if (gridMaterial == null)
-                {
-                    gridMaterial = LoadingHelper.GetGridMaterial();
-                }
-                gridMaterial.SetColor("_Color", Settings.Data.gui.grid.tintColor);
-                gridMeshRenderer.material = gridMaterial;
-                
-                // Add MAST_Grid_Component script to grid and pass grid preferences to it
+                // Apply the grid material, tiling and tint to the renderer.
                 UpdateGridSettings();
                 
                 // Return the grid to its last saved height
@@ -215,20 +208,18 @@ namespace MAST
                         1f,
                         Settings.Data.gui.grid.gridSizeZ / 10f);
                     
-                    // Texture tiling: each repetition covers 2 cells on the grid texture
-                    gridMaterial.SetTextureScale("_GridTexture",
-                        new Vector2(Settings.Data.gui.grid.cellCountX / 2f,
-                                    Settings.Data.gui.grid.cellCountZ / 2f));
-                    
-                    // Update grid color tint
-                    gridMaterial.SetColor("_Tint", Settings.Data.gui.grid.tintColor);
-                    
-                    // Apply updated grid position
                     MoveGridToNewPosition();
-                    
-                    // Apply updated grid material
+
+                    // Override appearance on the scene grid; the package material is read-only.
                     MeshRenderer gridMeshRenderer = gridGameObject.GetComponent<MeshRenderer>();
                     gridMeshRenderer.sharedMaterial = gridMaterial;
+                    var properties = new MaterialPropertyBlock();
+                    Vector2 offset = gridMaterial.GetTextureOffset("_GridTexture");
+                    properties.SetVector("_GridTexture_ST", new Vector4(
+                        Settings.Data.gui.grid.cellCountX / 2f, Settings.Data.gui.grid.cellCountZ / 2f,
+                        offset.x, offset.y));
+                    properties.SetColor("_Tint", Settings.Data.gui.grid.tintColor);
+                    gridMeshRenderer.SetPropertyBlock(properties);
                 }
             }
             #endregion

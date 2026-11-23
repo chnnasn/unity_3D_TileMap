@@ -156,8 +156,12 @@ namespace MAST
                         // If grid is off, turn it on
                         if (!Building.GridManager.DoesGridExist())
                         {
-                            Building.GridManager.gridExists = true;
-                            Building.GridManager.ChangeGridVisibility();
+                            Building.GridManager.CreateGrid();
+                            if (!Building.GridManager.DoesGridExist())
+                            {
+                                RemovePrefabSelection();
+                                return;
+                            }
                         }
                         
                         // Select the draw single tool
