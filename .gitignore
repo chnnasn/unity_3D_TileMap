@@ -1,0 +1,25 @@
+# Unity / IDE
+.vs/
+.idea/
+.vscode/
+*.csproj
+*.sln
+*.user
+*.userprefs
+
+# Unity generated
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]serSettings/
+[Mm]emoryCaptures/
+*.pidb.meta
+*.pdb
+*.mdb
+
+# OS
+.DS_Store
+Thumbs.db

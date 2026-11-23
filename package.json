@@ -1,0 +1,22 @@
+{
+  "name": "com.chnnasn.unity-3d-tilemap",
+  "version": "1.0.0",
+  "displayName": "3D TileMap",
+  "description": "Grid based 3D modular level building tool for Unity. Provides a snapping grid, a prefab palette with thumbnails, material painting, randomized placement and modular asset prefab creation. Editor only.",
+  "unity": "2022.3",
+  "keywords": [
+    "tilemap",
+    "3d",
+    "grid",
+    "level-design",
+    "modular",
+    "editor-tool"
+  ],
+  "author": {
+    "name": "chnnasn"
+  },
+  "documentationUrl": "https://github.com/chnnasn/unity_3D_TileMap#readme",
+  "changelogUrl": "https://github.com/chnnasn/unity_3D_TileMap/blob/main/CHANGELOG.md",
+  "licensesUrl": "https://github.com/chnnasn/unity_3D_TileMap/blob/main/LICENSE",
+  "hideInEditor": false
+}
