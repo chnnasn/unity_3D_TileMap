@@ -295,27 +295,23 @@ namespace MAST
                             EditorUtility.OpenFolderPanel("Choose the Folder that Contains your Prefabs",
                             MAST.LoadingHelper.ConvertProjectPathToAbsolutePath(MAST.GUI.DataManager.state.prefabPath), "");
                         
-                        // If a folder was chosen "Cancel was not clicked"
-                        if (chosenPath != "")
-                        {
-                            // Generate thumbnails, load prefabs, and select the first folder found (0)
-                            MAST.Building.Palette.Manager.GenerateThumbnailsAndLoadMaterials(chosenPath, 0, MAST.Settings.Data.gui.palette.overwriteThumbnails);
-                            
-                            // Refresh the AssetDatabase incase any new thumbnails were created
-                            AssetDatabase.Refresh();
-                            
-                            // Save the prefab path and currently selected prefab folder index
-                            MAST.GUI.DataManager.state.prefabPath = MAST.LoadingHelper.ConvertAbsolutePathToProjectPath(chosenPath);
-                            MAST.GUI.DataManager.state.selectedPrefabPaletteFolderIndex = MAST.Building.Palette.Manager.selectedFolderIndex;
-                            
-                            //MAST_Interface_Data_Manager.Save_Palette_Items(true);
-                            MAST.GUI.DataManager.Save_Changes_To_Disk();
-                        }
+                        if (!string.IsNullOrEmpty(chosenPath))
+                            EditorApplication.delayCall += () => LoadPrefabFolder(chosenPath);
                     }
                     
                     GUILayout.EndVertical();
                     
                     GUILayout.EndVertical();
+                }
+                // Importing thumbnails changes the palette controls after the current IMGUI event.
+                private static void LoadPrefabFolder(string path)
+                {
+                    MAST.Building.Palette.Manager.GenerateThumbnailsAndLoadMaterials(path, 0,
+                        MAST.Settings.Data.gui.palette.overwriteThumbnails);
+                    MAST.GUI.DataManager.state.prefabPath = MAST.LoadingHelper.ConvertAbsolutePathToProjectPath(path);
+                    MAST.GUI.DataManager.state.selectedPrefabPaletteFolderIndex = MAST.Building.Palette.Manager.selectedFolderIndex;
+                    MAST.GUI.DataManager.Save_Changes_To_Disk();
+                    UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
                 }
             #endregion
             }

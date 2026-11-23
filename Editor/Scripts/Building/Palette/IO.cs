@@ -317,33 +317,17 @@ namespace MAST
                 // ------------------------------------------------------------------------------------------------
                 private void CreateAndSaveThumbnails(List<string> prefabPaths)
                 {
-                    // Initialize a prefab array
-                    GameObject[] prefabs = new GameObject[prefabPaths.Count];
-                    
-                    // Loop through all prefab paths in the list
-                    for (int i = 0; i < prefabPaths.Count; i++)
+                    if (prefabPaths.Count == 0)
+                        return;
+
+                    using (var renderer = new ThumbnailRenderer())
                     {
-                        // Load prefab at this path and save it to the prefab array
-                        prefabs[i] = (GameObject)AssetDatabase.LoadAssetAtPath(prefabPaths[i], typeof(GameObject));
-                    }
-                    
-                    // Initialize thumbnail image array
-                    Texture2D[] thumbnailImages;
-                    
-                    // Generate images of all prefabs and save to a Texture2D array
-                    thumbnailImages = MAST.LoadingHelper.GetThumbnailCamera()
-                        .GetComponent<MAST.Component.ThumbnailCamera>()
-                        .GetPrefabThumbnails(prefabs);
-                    
-                    // Save the thumbnails to their correct folders
-                    for (int i = 0; i < prefabPaths.Count; i++)
-                    {
-                        // Encode this thumbnail image to PNG
-                        byte[] bytes = thumbnailImages[i].EncodeToPNG();
-                        
-                        // Save this thumbnail to correct folder
-                        string thumbnailPath = GetThumbnailPathFromPrefabPath(prefabPaths[i]);
-                        File.WriteAllBytes(thumbnailPath, bytes);
+                        foreach (string path in prefabPaths)
+                        {
+                            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                            if (prefab != null)
+                                ThumbnailRenderer.SavePng(renderer.Render(prefab), GetThumbnailPathFromPrefabPath(path));
+                        }
                     }
                     
                     // Refresh the assetdatabase so the new thumbnail images can be accessed

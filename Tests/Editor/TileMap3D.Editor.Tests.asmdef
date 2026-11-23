@@ -1,0 +1,6 @@
+{
+  "name": "TileMap3D.Editor.Tests",
+  "references": ["TileMap3D.Editor"],
+  "includePlatforms": ["Editor"],
+  "optionalUnityReferences": ["TestAssemblies"]
+}

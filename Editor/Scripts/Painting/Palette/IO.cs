@@ -320,33 +320,17 @@ namespace MAST
                 // ------------------------------------------------------------------------------------------------
                 private void CreateAndSaveThumbnails(List<string> materialPaths)
                 {
-                    // Initialize a material array
-                    Material[] materials = new Material[materialPaths.Count];
-                    
-                    // Loop through all material paths in the list
-                    for (int i = 0; i < materialPaths.Count; i++)
+                    if (materialPaths.Count == 0)
+                        return;
+
+                    using (var renderer = new ThumbnailRenderer())
                     {
-                        // Load material at this path and save it to the material array
-                        materials[i] = AssetDatabase.LoadAssetAtPath(materialPaths[i], typeof(Material)) as Material;
-                    }
-                    
-                    // Initialize thumbnail image array
-                    Texture2D[] thumbnailImages;
-                    
-                    // Generate images of all materials and save to a Texture2D array
-                    thumbnailImages = MAST.LoadingHelper.GetThumbnailCamera()
-                        .GetComponent<MAST.Component.ThumbnailCamera>()
-                        .GetMaterialThumbnails(materials);
-                    
-                    // Save the thumbnails to their correct folders
-                    for (int i = 0; i < materialPaths.Count; i++)
-                    {
-                        // Encode this thumbnail image to PNG
-                        byte[] bytes = thumbnailImages[i].EncodeToPNG();
-                        
-                        // Save this thumbnail to correct folder
-                        string thumbnailPath = GetThumbnailPathFromMaterialPath(materialPaths[i]);
-                        File.WriteAllBytes(thumbnailPath, bytes);
+                        foreach (string path in materialPaths)
+                        {
+                            var material = AssetDatabase.LoadAssetAtPath<Material>(path);
+                            if (material != null)
+                                ThumbnailRenderer.SavePng(renderer.Render(material), GetThumbnailPathFromMaterialPath(path));
+                        }
                     }
                     
                     // Refresh the assetdatabase so the new thumbnail images can be accessed

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8599826214447753602}
-  - component: {fileID: 8575202019074168858}
   m_Layer: 2
   m_Name: Prefab_Preview_Camera
   m_TagString: Untagged
@@ -33,19 +32,6 @@ Transform:
   - {fileID: 6198498688357850786}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 30, y: -135, z: 0}
---- !u!114 &8575202019074168858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3015513996496489151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89bf172c1eed4b89b570bd3327362403, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  snapshotCamera: {fileID: 3250010207105982704}
 --- !u!1 &6994094650270100894
 GameObject:
   m_ObjectHideFlags: 0

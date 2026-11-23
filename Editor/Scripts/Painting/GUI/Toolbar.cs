@@ -98,27 +98,22 @@ namespace MAST
                             EditorUtility.OpenFolderPanel("Choose the Folder that Contains your Materials",
                             MAST.LoadingHelper.ConvertProjectPathToAbsolutePath(MAST.GUI.DataManager.state.materialPath), "");
                         
-                        // If a folder was chosen "Cancel was not clicked"
-                        if (chosenPath != "")
-                        {
-                            // Generate thumbnails, load materials, and select the first folder found (0)
-                            MAST.Painting.Palette.Manager.GenerateThumbnailsAndLoadMaterials(chosenPath, 0, MAST.Settings.Data.gui.palette.overwriteThumbnails);
-                            
-                            // Refresh the AssetDatabase incase any new thumbnails were created
-                            AssetDatabase.Refresh();
-                            
-                            // Save the material path and currently selected material folder index
-                            MAST.GUI.DataManager.state.materialPath = MAST.LoadingHelper.ConvertAbsolutePathToProjectPath(chosenPath);
-                            MAST.GUI.DataManager.state.selectedMaterialPaletteFolderIndex = MAST.Painting.Palette.Manager.selectedFolderIndex;
-                            
-                            //MAST_Interface_Data_Manager.Save_Palette_Items(true);
-                            MAST.GUI.DataManager.Save_Changes_To_Disk();
-                        }
+                        if (!string.IsNullOrEmpty(chosenPath))
+                            EditorApplication.delayCall += () => LoadMaterialFolder(chosenPath);
                     }
                     
                     GUILayout.EndVertical();
                     
                     GUILayout.EndVertical();
+                }
+                private static void LoadMaterialFolder(string path)
+                {
+                    MAST.Painting.Palette.Manager.GenerateThumbnailsAndLoadMaterials(path, 0,
+                        MAST.Settings.Data.gui.palette.overwriteThumbnails);
+                    MAST.GUI.DataManager.state.materialPath = MAST.LoadingHelper.ConvertAbsolutePathToProjectPath(path);
+                    MAST.GUI.DataManager.state.selectedMaterialPaletteFolderIndex = MAST.Painting.Palette.Manager.selectedFolderIndex;
+                    MAST.GUI.DataManager.Save_Changes_To_Disk();
+                    UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
                 }
             }
         }
