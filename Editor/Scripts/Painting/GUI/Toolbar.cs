@@ -93,21 +93,20 @@ namespace MAST
                     if (GUILayout.Button(new GUIContent(iconLoadFromFolder, "Load materials from a project folder"),
                         "MAST Button", GUILayout.Width(toolBarIconSize), GUILayout.Height(toolBarIconSize)))
                     {
-                        // Show choose folder dialog
-                        string chosenPath =
-                            EditorUtility.OpenFolderPanel("Choose the Folder that Contains your Materials",
-                            MAST.LoadingHelper.ConvertProjectPathToAbsolutePath(MAST.GUI.DataManager.state.materialPath), "");
-                        
-                        if (!string.IsNullOrEmpty(chosenPath))
-                            EditorApplication.delayCall += () => LoadMaterialFolder(chosenPath);
+                        EditorApplication.delayCall += ChooseAndLoadMaterialFolder;
                     }
                     
                     GUILayout.EndVertical();
                     
                     GUILayout.EndVertical();
                 }
-                private static void LoadMaterialFolder(string path)
+                private static void ChooseAndLoadMaterialFolder()
                 {
+                    string path = EditorUtility.OpenFolderPanel("Choose the Folder that Contains your Materials",
+                        MAST.LoadingHelper.ConvertProjectPathToAbsolutePath(MAST.GUI.DataManager.state.materialPath), "");
+                    if (string.IsNullOrEmpty(path))
+                        return;
+
                     MAST.Painting.Palette.Manager.GenerateThumbnailsAndLoadMaterials(path, 0,
                         MAST.Settings.Data.gui.palette.overwriteThumbnails);
                     MAST.GUI.DataManager.state.materialPath = MAST.LoadingHelper.ConvertAbsolutePathToProjectPath(path);

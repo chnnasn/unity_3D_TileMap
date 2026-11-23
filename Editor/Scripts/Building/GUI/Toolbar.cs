@@ -290,13 +290,7 @@ namespace MAST
                         "MAST Button", GUILayout.Width(toolBarIconSize), GUILayout.Height(toolBarIconSize)))
                     {
                         
-                        // Show choose folder dialog
-                        string chosenPath =
-                            EditorUtility.OpenFolderPanel("Choose the Folder that Contains your Prefabs",
-                            MAST.LoadingHelper.ConvertProjectPathToAbsolutePath(MAST.GUI.DataManager.state.prefabPath), "");
-                        
-                        if (!string.IsNullOrEmpty(chosenPath))
-                            EditorApplication.delayCall += () => LoadPrefabFolder(chosenPath);
+                        EditorApplication.delayCall += ChooseAndLoadPrefabFolder;
                     }
                     
                     GUILayout.EndVertical();
@@ -304,8 +298,13 @@ namespace MAST
                     GUILayout.EndVertical();
                 }
                 // Importing thumbnails changes the palette controls after the current IMGUI event.
-                private static void LoadPrefabFolder(string path)
+                private static void ChooseAndLoadPrefabFolder()
                 {
+                    string path = EditorUtility.OpenFolderPanel("Choose the Folder that Contains your Prefabs",
+                        MAST.LoadingHelper.ConvertProjectPathToAbsolutePath(MAST.GUI.DataManager.state.prefabPath), "");
+                    if (string.IsNullOrEmpty(path))
+                        return;
+
                     MAST.Building.Palette.Manager.GenerateThumbnailsAndLoadMaterials(path, 0,
                         MAST.Settings.Data.gui.palette.overwriteThumbnails);
                     MAST.GUI.DataManager.state.prefabPath = MAST.LoadingHelper.ConvertAbsolutePathToProjectPath(path);
