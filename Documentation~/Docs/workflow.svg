@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="520" viewBox="0 0 1000 520" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="wArrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 z" fill="#7d8590"/>
+    </marker>
+    <marker id="wAccent" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 z" fill="#8250df"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="520" fill="#ffffff"/>
+  <text x="30" y="38" font-size="22" font-weight="600" fill="#1f2328">Core Workflows</text>
+  <text x="30" y="60" font-size="13" fill="#656d76">Placement pipeline (left) &#183; Material painting pipeline (right)</text>
+
+  <!-- ===== Placement column ===== -->
+  <rect x="24" y="80" width="440" height="60" rx="8" fill="#ddf4ff" stroke="#54aeff" stroke-width="1.5"/>
+  <text x="244" y="105" font-size="13" font-weight="600" fill="#0a3069" text-anchor="middle">SceneView Event</text>
+  <text x="244" y="124" font-size="11" fill="#656d76" text-anchor="middle">mouse position &#183; hotkey-modifier state</text>
+
+  <path d="M244,140 L244,164" stroke="#7d8590" stroke-width="1.6" marker-end="url(#wArrow)"/>
+
+  <rect x="24" y="164" width="440" height="60" rx="8" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="244" y="189" font-size="13" font-weight="600" fill="#1f2328" text-anchor="middle">Visualizer &#183; raycast + grid snap</text>
+  <text x="244" y="208" font-size="11" fill="#656d76" text-anchor="middle">cell size, Y unit, XZ offset, grid height</text>
+
+  <path d="M244,224 L244,248" stroke="#7d8590" stroke-width="1.6" marker-end="url(#wArrow)"/>
+
+  <polygon points="244,248 344,288 244,328 144,288" fill="#fff8c5" stroke="#d4a72c" stroke-width="1.5"/>
+  <text x="244" y="283" font-size="12" font-weight="600" fill="#4d2d00" text-anchor="middle">Grid on &amp;</text>
+  <text x="244" y="300" font-size="12" font-weight="600" fill="#4d2d00" text-anchor="middle">prefab selected?</text>
+  <path d="M344,296 L432,296" stroke="#7d8590" stroke-width="1.6" marker-end="url(#wArrow)"/>
+  <text x="352" y="288" font-size="11" fill="#656d76">no &#8594; idle</text>
+
+  <path d="M244,328 L244,352" stroke="#7d8590" stroke-width="1.6" marker-end="url(#wArrow)"/>
+
+  <polygon points="244,352 336,390 244,428 152,390" fill="#fff8c5" stroke="#d4a72c" stroke-width="1.5"/>
+  <text x="244" y="386" font-size="12" font-weight="600" fill="#4d2d00" text-anchor="middle">Target cell</text>
+  <text x="244" y="403" font-size="12" font-weight="600" fill="#4d2d00" text-anchor="middle">occupied?</text>
+  <path d="M336,398 L432,398" stroke="#7d8590" stroke-width="1.6" marker-end="url(#wArrow)"/>
+  <text x="344" y="390" font-size="11" fill="#656d76">yes &#8594; skip</text>
+
+  <path d="M244,428 L244,452" stroke="#7d8590" stroke-width="1.6" marker-end="url(#wArrow)"/>
+
+  <rect x="24" y="452" width="440" height="46" rx="8" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="244" y="471" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">Instantiate + randomize + Undo</text>
+  <text x="244" y="489" font-size="11" fill="#656d76" text-anchor="middle">PrefabUtility &#183; rotation / scale / flip / weighted replace</text>
+
+  <!-- ===== Painting column ===== -->
+  <rect x="536" y="80" width="440" height="60" rx="8" fill="#f3e8ff" stroke="#a371f7" stroke-width="1.5"/>
+  <text x="756" y="105" font-size="13" font-weight="600" fill="#4c2889" text-anchor="middle">Paint Tab &#183; material selected</text>
+  <text x="756" y="124" font-size="11" fill="#656d76" text-anchor="middle">brush / bucket / roller mode</text>
+
+  <path d="M756,140 L756,164" stroke="#7d8590" stroke-width="1.6" marker-end="url(#wArrow)"/>
+
+  <rect x="536" y="164" width="440" height="60" rx="8" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="756" y="189" font-size="13" font-weight="600" fill="#1f2328" text-anchor="middle">Hover raycast &#183; resolve submesh index</text>
+  <text x="756" y="208" font-size="11" fill="#656d76" text-anchor="middle">pick MeshRenderer + shared material slot</text>
+
+  <path d="M756,224 L756,248" stroke="#7d8590" stroke-width="1.6" marker-end="url(#wArrow)"/>
+
+  <rect x="536" y="248" width="440" height="72" rx="8" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="756" y="273" font-size="13" font-weight="600" fill="#1f2328" text-anchor="middle">Preview paint</text>
+  <text x="756" y="292" font-size="11" fill="#656d76" text-anchor="middle">swap material temporarily, keep original + prefab mods backup</text>
+  <text x="756" y="309" font-size="11" fill="#656d76" text-anchor="middle">preview shows the result before committing</text>
+
+  <path d="M756,320 L756,344" stroke="#7d8590" stroke-width="1.6" marker-end="url(#wArrow)"/>
+
+  <rect x="536" y="344" width="440" height="60" rx="8" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="756" y="369" font-size="13" font-weight="600" fill="#1f2328" text-anchor="middle">Undo group per session</text>
+  <text x="756" y="388" font-size="11" fill="#656d76" text-anchor="middle">Undo.IncrementCurrentGroup + CollapseUndoOperations</text>
+
+  <path d="M756,404 L756,428" stroke="#7d8590" stroke-width="1.6" marker-end="url(#wArrow)"/>
+
+  <rect x="536" y="428" width="440" height="70" rx="8" fill="#f3e8ff" stroke="#a371f7" stroke-width="1.5"/>
+  <text x="756" y="453" font-size="13" font-weight="600" fill="#4c2889" text-anchor="middle">Committed paint</text>
+  <text x="756" y="472" font-size="11" fill="#656d76" text-anchor="middle">material change persists on the instance;</text>
+  <text x="756" y="489" font-size="11" fill="#656d76" text-anchor="middle">empty slot restores the source prefab material</text>
+
+  <!-- side note -->
+  <path d="M536,474 C500,474 500,110 536,110" stroke="#8250df" stroke-width="1.4" fill="none" marker-end="url(#wAccent)" stroke-dasharray="4 3"/>
+  <text x="516" y="300" font-size="10" fill="#8250df" transform="rotate(-90 516 300)" text-anchor="middle">hover preview loop</text>
+</svg>

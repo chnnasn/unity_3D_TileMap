@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 z" fill="#7d8590"/>
+    </marker>
+    <marker id="arrowAccent" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 z" fill="#2f6feb"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="600" fill="#ffffff"/>
+
+  <text x="30" y="38" font-size="22" font-weight="600" fill="#1f2328">3D TileMap &#183; Editor Architecture</text>
+  <text x="30" y="60" font-size="13" fill="#656d76">Unity 2022.3+ &#183; IMGUI &#183; Editor-only assembly (TileMap3D.Editor)</text>
+
+  <!-- Layer 1 -->
+  <rect x="30" y="80" width="600" height="96" rx="8" fill="#ddf4ff" stroke="#54aeff" stroke-width="1.5"/>
+  <text x="46" y="104" font-size="14" font-weight="600" fill="#0a3069">Presentation Layer</text>
+  <rect x="46" y="116" width="136" height="44" rx="6" fill="#ffffff" stroke="#54aeff"/>
+  <text x="114" y="134" font-size="12" fill="#0a3069" text-anchor="middle">EditorWindow</text>
+  <text x="114" y="150" font-size="11" fill="#656d76" text-anchor="middle">Tools / 3D TileMap</text>
+  <rect x="192" y="116" width="136" height="44" rx="6" fill="#ffffff" stroke="#54aeff"/>
+  <text x="260" y="134" font-size="12" fill="#0a3069" text-anchor="middle">Building Toolbar</text>
+  <text x="260" y="150" font-size="11" fill="#656d76" text-anchor="middle">tools + grid + palette</text>
+  <rect x="338" y="116" width="136" height="44" rx="6" fill="#ffffff" stroke="#54aeff"/>
+  <text x="406" y="134" font-size="12" fill="#0a3069" text-anchor="middle">Painting Toolbar</text>
+  <text x="406" y="150" font-size="11" fill="#656d76" text-anchor="middle">material palette</text>
+  <rect x="484" y="116" width="130" height="44" rx="6" fill="#ffffff" stroke="#54aeff"/>
+  <text x="549" y="134" font-size="12" fill="#0a3069" text-anchor="middle">Hotkeys</text>
+  <text x="549" y="150" font-size="11" fill="#656d76" text-anchor="middle">modifier-aware</text>
+
+  <!-- Layer 2 -->
+  <rect x="30" y="196" width="600" height="210" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="46" y="220" font-size="14" font-weight="600" fill="#1f2328">Core Modules</text>
+
+  <rect x="46" y="232" width="176" height="156" rx="6" fill="#ffffff" stroke="#d0d7de"/>
+  <text x="134" y="252" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">Building/</text>
+  <text x="58" y="272" font-size="11" fill="#656d76">GridManager &#183; grid offsets</text>
+  <text x="58" y="290" font-size="11" fill="#656d76">Visualizer &#183; raycast snap</text>
+  <text x="58" y="308" font-size="11" fill="#656d76">Placement &#183; overlap check</text>
+  <text x="58" y="326" font-size="11" fill="#656d76">Manipulate &#183; rotate / flip</text>
+  <text x="58" y="344" font-size="11" fill="#656d76">Randomizer &#183; seed / weight</text>
+  <text x="58" y="362" font-size="11" fill="#656d76">PaintArea &#183; square fill</text>
+  <text x="58" y="380" font-size="11" fill="#656d76">Palette &#183; Manager / IO</text>
+
+  <rect x="230" y="232" width="176" height="156" rx="6" fill="#ffffff" stroke="#d0d7de"/>
+  <text x="318" y="252" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">Painting/</text>
+  <text x="242" y="272" font-size="11" fill="#656d76">Painter &#183; preview paint</text>
+  <text x="242" y="290" font-size="11" fill="#656d76">Brush / Bucket / Roller</text>
+  <text x="242" y="308" font-size="11" fill="#656d76">Source prefab material</text>
+  <text x="242" y="326" font-size="11" fill="#656d76">lookup + restore</text>
+  <text x="242" y="344" font-size="11" fill="#656d76">Undo group per session</text>
+  <text x="242" y="362" font-size="11" fill="#656d76">Material palette</text>
+  <text x="242" y="380" font-size="11" fill="#656d76">Manager / IO</text>
+
+  <rect x="414" y="232" width="200" height="156" rx="6" fill="#ffffff" stroke="#d0d7de"/>
+  <text x="514" y="252" font-size="12" font-weight="600" fill="#1f2328" text-anchor="middle">Tools/</text>
+  <text x="426" y="272" font-size="11" fill="#656d76">PrefabCreator &#183; 4-step wizard</text>
+  <text x="426" y="290" font-size="11" fill="#656d76">material dedupe / rename</text>
+  <text x="426" y="308" font-size="11" fill="#656d76">material substitution</text>
+  <text x="426" y="326" font-size="11" fill="#656d76">CombineMeshes &#183; merge</text>
+  <text x="426" y="344" font-size="11" fill="#656d76">MeshHelper &#183; submesh logic</text>
+  <text x="426" y="362" font-size="11" fill="#656d76">AssemblyCreator &#183; assembly</text>
+  <text x="426" y="380" font-size="11" fill="#656d76">MeshTools &#183; inspector</text>
+
+  <!-- Layer 3 -->
+  <rect x="30" y="426" width="600" height="96" rx="8" fill="#fff8c5" stroke="#d4a72c" stroke-width="1.5"/>
+  <text x="46" y="450" font-size="14" font-weight="600" fill="#4d2d00">Support Layer</text>
+  <rect x="46" y="460" width="180" height="46" rx="6" fill="#ffffff" stroke="#d4a72c"/>
+  <text x="136" y="478" font-size="12" fill="#4d2d00" text-anchor="middle">Settings/</text>
+  <text x="136" y="494" font-size="11" fill="#656d76" text-anchor="middle">Data + ScriptObj + templates</text>
+  <rect x="236" y="460" width="180" height="46" rx="6" fill="#ffffff" stroke="#d4a72c"/>
+  <text x="326" y="478" font-size="12" fill="#4d2d00" text-anchor="middle">Component/</text>
+  <text x="326" y="494" font-size="11" fill="#656d76" text-anchor="middle">MASTPrefabSettings, camera</text>
+  <rect x="426" y="460" width="188" height="46" rx="6" fill="#ffffff" stroke="#d4a72c"/>
+  <text x="520" y="478" font-size="12" fill="#4d2d00" text-anchor="middle">Const / DataClass / Enum</text>
+  <text x="520" y="494" font-size="11" fill="#656d76" text-anchor="middle">LoadingHelper &#183; asset lookup</text>
+
+  <!-- Right column -->
+  <rect x="660" y="80" width="310" height="210" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="676" y="104" font-size="14" font-weight="600" fill="#1f2328">Project-side State</text>
+  <text x="676" y="130" font-size="11" fill="#656d76">Assets/TileMap3D/Settings/</text>
+  <text x="690" y="152" font-size="11" fill="#1f2328">CoreSettings.asset</text>
+  <text x="690" y="172" font-size="11" fill="#1f2328">GUI.asset &#183; Placement.asset</text>
+  <text x="690" y="192" font-size="11" fill="#1f2328">Hotkey.asset &#183; InterfaceState</text>
+  <text x="676" y="218" font-size="11" fill="#656d76">Created on first run, never</text>
+  <text x="676" y="236" font-size="11" fill="#656d76">overwritten afterwards.</text>
+  <text x="676" y="260" font-size="11" fill="#656d76">Package templates stay</text>
+  <text x="676" y="278" font-size="11" fill="#656d76">read-only in Editor/Settings.</text>
+
+  <rect x="660" y="306" width="310" height="96" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="676" y="330" font-size="14" font-weight="600" fill="#1f2328">Packaging</text>
+  <text x="676" y="352" font-size="11" fill="#656d76">UPM package &#183; com.chnnasn.unity-3d-tilemap</text>
+  <text x="676" y="370" font-size="11" fill="#656d76">asmdef: TileMap3D.Editor (Editor only)</text>
+  <text x="676" y="388" font-size="11" fill="#656d76">Docs ~/ folder not imported by Unity</text>
+
+  <rect x="660" y="418" width="310" height="104" rx="8" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="676" y="442" font-size="14" font-weight="600" fill="#1f2328">Verification</text>
+  <text x="676" y="464" font-size="11" fill="#656d76">Tests/Editor &#183; EditMode</text>
+  <text x="676" y="482" font-size="11" fill="#656d76">PaletteThumbnailTests</text>
+  <text x="676" y="500" font-size="11" fill="#656d76">CI-free, run from Test Runner</text>
+  <text x="676" y="514" font-size="11" fill="#656d76">(Unity 2022.3+)</text>
+
+  <!-- Arrows -->
+  <path d="M330,176 L330,190" stroke="#7d8590" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <path d="M330,406 L330,420" stroke="#7d8590" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <path d="M636,290 L636,286" stroke="#7d8590" stroke-width="0"/>
+  <path d="M630,180 C650,180 650,160 660,160" stroke="#2f6feb" stroke-width="1.6" fill="none" marker-end="url(#arrowAccent)" stroke-dasharray="4 3"/>
+  <path d="M660,440 C650,440 650,470 630,470" stroke="#2f6feb" stroke-width="1.6" fill="none" marker-end="url(#arrowAccent)" stroke-dasharray="4 3"/>
+  <path d="M630,300 C650,300 650,330 660,330" stroke="#2f6feb" stroke-width="1.6" fill="none" marker-end="url(#arrowAccent)" stroke-dasharray="4 3"/>
+
+  <text x="30" y="558" font-size="11" fill="#656d76">Settings flow downward (read) and upward (write-back); dotted blue links mark runtime reads of project-side assets and test coverage.</text>
+</svg>
